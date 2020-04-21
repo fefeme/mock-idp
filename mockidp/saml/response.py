@@ -59,8 +59,10 @@ def render_response(session, user):
         session=session,
         user=user
     )
+    from pprint import pprint
+    pprint(params)
     response = template.render(params)
-
+    print(response)
     return response
 
 

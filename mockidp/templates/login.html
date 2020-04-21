@@ -12,7 +12,8 @@
     <title>Signin Template for Bootstrap</title>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
     <link href="/css/login.css" rel="stylesheet">
@@ -21,17 +22,35 @@
 <body>
 
 <div class="container">
-
-    <form class="form-signin" action="/saml/auth" method="POST">
-        <h2 class="form-signin-heading">Mock-IDP</h2>
-        <label for="input_username" class="sr-only">User</label>
-        <input type="text" name="username"  id="input_username" class="form-control" placeholder="Username" required autofocus value="charlie"/>
-        <label for="input_password" class="sr-only">Password</label>
-        <input type="password" name="password" id="input_password" class="form-control" placeholder="Password" required value="snoopy" />
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    </form>
-
+    <div class="row">
+        <div class="col-xs-8">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            <form class="form-signin" action="/saml/auth" method="POST">
+                <h2 class="form-signin-heading">Mock-IDP</h2>
+                <form method="POST" action="/">
+                    {{ form.hidden_tag() }}
+                    {% for field in form if field.name != 'csrf_token' %}
+                        <div class="form-group {% if field.errors %}has-error{% endif %}">
+                            {{ field.label }}
+                            <input type="text" class="form-control" name="{{ field.name }}" placeholder="{{ field.text_label }}" }}>
+                            {% for error in field.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                </form>
+            </form>
+        </div>
+    </div>
 </div>
 
 <!-- Latest compiled and minified JavaScript -->

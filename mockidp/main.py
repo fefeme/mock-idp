@@ -24,8 +24,9 @@ def main(argv):
     for sp in conf['service_providers']:
         print(f"Known Service Provider {sp['name']}")
 
-    for username, data in conf['users'].items():
-        print(f"Loaded user {username}")
-
     sys.stdout.flush()
     app.run(debug=options.debug, host="0.0.0.0", port=options.port)
+
+
+if __name__ == '__main__':
+    main(sys.argv)
