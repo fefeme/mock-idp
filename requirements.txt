@@ -3,5 +3,6 @@ flask
 lxml
 PyYAML>=3.12
 flask-script>=2.0.5
+Flask-WTF
 nose
 signxml>=2.3.0
